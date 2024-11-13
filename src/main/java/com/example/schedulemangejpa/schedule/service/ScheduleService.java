@@ -56,16 +56,28 @@ public class ScheduleService {
 
     public ScheduleReponseDto updateSchedule(Long scheduleId, UpdateScheduleRequestDto requestDto) {
         Schedule findSchedule = scheduleRepository.findByIdOrElseThrow(scheduleId);
-        Author author = findSchedule.getAuthor();
 
-        if (author.getPassword().equals(requestDto.getPassword())) {
+        if (isValidatePassword(findSchedule, requestDto.getPassword())) {
             findSchedule.setTitle(requestDto.getTitle());
             findSchedule.setContent(requestDto.getContent());
-        } else {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "password not match!");
         }
 
         scheduleRepository.save(findSchedule);
         return ScheduleReponseDto.toDto(findSchedule);
+    }
+
+    public void deleteSchedule(Long scheduleId, String password) {
+        Schedule findSchedule = scheduleRepository.findByIdOrElseThrow(scheduleId);
+        if (isValidatePassword(findSchedule, password)) {
+            scheduleRepository.delete(findSchedule);
+        }
+    }
+
+    private boolean isValidatePassword(Schedule schedule, String password) {
+        if (schedule.getAuthor().getPassword().equals(password)) {
+            return true;
+        }else {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "password not match!");
+        }
     }
 }

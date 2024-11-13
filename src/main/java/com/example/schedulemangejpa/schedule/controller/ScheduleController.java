@@ -2,6 +2,7 @@ package com.example.schedulemangejpa.schedule.controller;
 
 import com.example.schedulemangejpa.schedule.dto.CreateScheduleRequestDto;
 import com.example.schedulemangejpa.schedule.dto.CreateScheduleResponseDto;
+import com.example.schedulemangejpa.schedule.dto.DeleteScheduleRequestDto;
 import com.example.schedulemangejpa.schedule.dto.ScheduleReponseDto;
 import com.example.schedulemangejpa.schedule.dto.UpdateScheduleRequestDto;
 import com.example.schedulemangejpa.schedule.service.ScheduleService;
@@ -9,6 +10,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -59,5 +61,14 @@ public class ScheduleController {
     ){
         ScheduleReponseDto reponseDto = scheduleService.updateSchedule(scheduleId, requestDto);
         return new ResponseEntity<>(reponseDto, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{scheduleId}")
+    public ResponseEntity<Void> deleteSchedule(
+        @PathVariable Long scheduleId,
+        @RequestBody DeleteScheduleRequestDto requestDto
+    ){
+        scheduleService.deleteSchedule(scheduleId, requestDto.getPassword());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
