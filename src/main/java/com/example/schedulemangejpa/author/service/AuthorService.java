@@ -4,6 +4,7 @@ import com.example.schedulemangejpa.author.dto.AuthorResponseDto;
 import com.example.schedulemangejpa.author.dto.SignUpResponseDto;
 import com.example.schedulemangejpa.author.entity.Author;
 import com.example.schedulemangejpa.author.repository.AuthorRepository;
+import com.example.schedulemangejpa.common.config.PasswordEncoder;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -16,12 +17,15 @@ import org.springframework.web.server.ResponseStatusException;
 public class AuthorService {
 
     private final AuthorRepository authorRepository;
+    private final PasswordEncoder passwordEncoder;
 
     // 회원가입을 처리하는 메서드
     public SignUpResponseDto signUp(String authorName, String authorEmail, String password) {
 
         // 새로운 Author 객체를 생성하여 DB에 저장
-        Author savedAuthor = authorRepository.save(new Author(authorName, authorEmail, password));
+        // 저장할 때 비밀번호는 passwordEncoder를 사용하여 인코딩 진행
+        Author savedAuthor = authorRepository.save(
+            new Author(authorName, authorEmail, passwordEncoder.encode(password)));
 
         // 회원가입 성공 후 응답 DTO를 생성하여 반환
         return new SignUpResponseDto(
@@ -50,9 +54,11 @@ public class AuthorService {
     // 작성자 ID와 비밀번호로 작성자를 삭제하는 메서드
     public void deleteAuthor(Long authorId, String password) {
         Author findAuthor = authorRepository.findByIdOrElseThrow(authorId);
+        //DB에 비밀번호를 저장할 때 암호화 하여 저장하므로 그대로 가져온 것이 encodedPassword가 된다.
+        String encodedPassword = findAuthor.getPassword();
 
         //id를 통해 찾은 작성자의 패스워드와 요청할때 받은 패스워드가 일치하다면 삭제 진행
-        if (findAuthor.getPassword().equals(password)) {
+        if (passwordEncoder.matches(password, encodedPassword)) {
             authorRepository.delete(findAuthor);
         } else {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "password not match!");
@@ -67,7 +73,7 @@ public class AuthorService {
         Author findAuthor = authorRepository.findAuthorByEmail(authorEmail).orElseThrow(null);
 
         //객체가 null이 아니면서 패스워드도 일치한다면 수행
-        if (findAuthor != null && findAuthor.getPassword().equals(password)) {
+        if (findAuthor != null && passwordEncoder.matches(password, findAuthor.getPassword())) {
             //현재 요청에 대한 세션을 가져온다. 만약 세션이 존재하지않으면 새로운 세션을 생성
             HttpSession session = request.getSession();
             //세션에 authorId 라는 이름으로 작성자의 id를 저장한다. 이렇게 저장하고 나면 이후 요청에서도 세션을 통해

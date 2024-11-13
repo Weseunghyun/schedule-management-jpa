@@ -2,6 +2,7 @@ package com.example.schedulemangejpa.schedule.service;
 
 import com.example.schedulemangejpa.author.entity.Author;
 import com.example.schedulemangejpa.author.repository.AuthorRepository;
+import com.example.schedulemangejpa.common.config.PasswordEncoder;
 import com.example.schedulemangejpa.schedule.dto.CreateScheduleResponseDto;
 import com.example.schedulemangejpa.schedule.dto.ScheduleReponseDto;
 import com.example.schedulemangejpa.schedule.dto.UpdateScheduleRequestDto;
@@ -11,6 +12,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
@@ -19,6 +21,7 @@ public class ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
     private final AuthorRepository authorRepository;
+    private final PasswordEncoder passwordEncoder;
 
     // 스케줄 생성 로직
     public CreateScheduleResponseDto createSchedule(Long authorId, String title, String content) {
@@ -60,6 +63,7 @@ public class ScheduleService {
     }
 
     // 스케줄 업데이트 로직
+    @Transactional
     public ScheduleReponseDto updateSchedule(Long scheduleId, UpdateScheduleRequestDto requestDto) {
         Schedule findSchedule = scheduleRepository.findByIdOrElseThrow(scheduleId);
 
@@ -85,8 +89,11 @@ public class ScheduleService {
 
     // 비밀번호 검증 메서드
     private boolean isValidatePassword(Schedule schedule, String password) {
-        //스케줄과 연관관계인 Author객체를 얻어와서 패스워드를 비교
-        if (schedule.getAuthor().getPassword().equals(password)) {
+        //스케줄과 연관관계인 Author객체에서 비밀번호를 가져옴
+        String encodedPassword = schedule.getAuthor().getPassword();
+
+        //가져온 인코딩된 비밀번호와 요청받은 평문 비밀번호를 matches 메서드로 비교
+        if (passwordEncoder.matches(password, encodedPassword)) {
             return true;
         }else {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "password not match!");
