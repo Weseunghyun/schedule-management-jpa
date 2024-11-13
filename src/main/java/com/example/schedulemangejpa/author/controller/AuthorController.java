@@ -2,9 +2,11 @@ package com.example.schedulemangejpa.author.controller;
 
 import com.example.schedulemangejpa.author.dto.AuthorResponseDto;
 import com.example.schedulemangejpa.author.dto.DeleteAuthorRequestDto;
+import com.example.schedulemangejpa.author.dto.LoginRequestDto;
 import com.example.schedulemangejpa.author.dto.SignUpRequestDto;
 import com.example.schedulemangejpa.author.dto.SignUpResponseDto;
 import com.example.schedulemangejpa.author.service.AuthorService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,6 +54,35 @@ public class AuthorController {
         @RequestBody DeleteAuthorRequestDto requestDto
     ) {
         authorService.deleteAuthor(authorId, requestDto.getPassword());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    //로그인 쿠키/세션을 활용
+    @PostMapping("/login")
+    public ResponseEntity<Void> login(
+        @RequestBody LoginRequestDto requestDto,
+        HttpServletRequest request
+    ) {
+        //서비스 계층 login 메서드를 통해 로그인이 정상적으로 진행되는지 검증받음
+        boolean isValidateLogin = authorService.login(
+            requestDto.getAuthorEmail(),
+            requestDto.getPassword(),
+            request
+        );
+
+        //정상적으로 로그인이 됐다면 OK 코드를 보냄
+        if (isValidateLogin) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+
+        //정상적으로 로그인 되지않았으면 UNAUTHORIZED 코드를 보냄
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    }
+
+    //로그아웃하여 세션을 무효화 시키는 서비스 메서드를 호출
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(HttpServletRequest request) {
+        authorService.logout(request);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
