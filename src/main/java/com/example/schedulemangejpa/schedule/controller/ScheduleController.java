@@ -6,6 +6,7 @@ import com.example.schedulemangejpa.schedule.dto.DeleteScheduleRequestDto;
 import com.example.schedulemangejpa.schedule.dto.ScheduleReponseDto;
 import com.example.schedulemangejpa.schedule.dto.UpdateScheduleRequestDto;
 import com.example.schedulemangejpa.schedule.service.ScheduleService;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,7 +32,7 @@ public class ScheduleController {
     @PostMapping("/{authorId}")
     public ResponseEntity<CreateScheduleResponseDto> createSchedule(
         @PathVariable Long authorId, // 경로에서 스케줄 ID를 받아옴
-        @RequestBody CreateScheduleRequestDto requestDto // 요청 본문에서 제목과 내용을 받아옴
+        @Valid @RequestBody CreateScheduleRequestDto requestDto // 요청 본문에서 제목과 내용을 받아옴
     ) {
         // 서비스에서 스케줄 생성 로직을 호출하고, 응답 DTO를 반환
         CreateScheduleResponseDto responseDto = scheduleService.createSchedule(

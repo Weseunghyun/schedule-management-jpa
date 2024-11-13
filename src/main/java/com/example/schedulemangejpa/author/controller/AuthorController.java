@@ -7,6 +7,7 @@ import com.example.schedulemangejpa.author.dto.SignUpRequestDto;
 import com.example.schedulemangejpa.author.dto.SignUpResponseDto;
 import com.example.schedulemangejpa.author.service.AuthorService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +30,7 @@ public class AuthorController {
     //회원가입 진행 Post 메서드
     @PostMapping("/signup")
     public ResponseEntity<SignUpResponseDto> signUp(
-        @RequestBody SignUpRequestDto requestDto
+        @Valid @RequestBody SignUpRequestDto requestDto
     ) {
         // AuthorService의 signUp 메서드를 호출하여 회원가입을 처리하고, 응답 DTO를 생성
         SignUpResponseDto responseDto = authorService.signUp(
@@ -53,7 +54,7 @@ public class AuthorController {
     @DeleteMapping("/{authorId}")
     public ResponseEntity<Void> deleteAuthorById(
         @PathVariable Long authorId,
-        @RequestBody DeleteAuthorRequestDto requestDto
+        @Valid @RequestBody DeleteAuthorRequestDto requestDto
     ) {
         authorService.deleteAuthor(authorId, requestDto.getPassword());
         return new ResponseEntity<>(HttpStatus.OK);
@@ -62,7 +63,7 @@ public class AuthorController {
     //로그인 쿠키/세션을 활용
     @PostMapping("/login")
     public ResponseEntity<Void> login(
-        @RequestBody LoginRequestDto requestDto,
+        @Valid @RequestBody LoginRequestDto requestDto,
         HttpServletRequest request
     ) {
         //서비스 계층 login 메서드를 통해 로그인이 정상적으로 진행되는지 검증받음
