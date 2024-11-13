@@ -1,10 +1,13 @@
 package com.example.schedulemangejpa.author.controller;
 
+import com.example.schedulemangejpa.author.dto.AuthorResponseDto;
 import com.example.schedulemangejpa.author.dto.SignUpRequestDto;
 import com.example.schedulemangejpa.author.dto.SignUpResponseDto;
 import com.example.schedulemangejpa.author.service.AuthorService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,13 +27,20 @@ public class AuthorController {
     @PostMapping("/signup")
     public ResponseEntity<SignUpResponseDto> signUp(
         @RequestBody SignUpRequestDto requestDto
-    ){
+    ) {
         SignUpResponseDto responseDto = authorService.signUp(
             requestDto.getAuthorName(),
             requestDto.getAuthorEmail(),
             requestDto.getPassword()
-            );
+        );
 
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
+    }
+
+    //PathVariable을 통해 받아온 authorId로 해당 작성자의 정보를 조회하여 넘겨주는 Get 메서드
+    @GetMapping("/{authorId}")
+    public ResponseEntity<AuthorResponseDto> findAuthorById(@PathVariable Long authorId) {
+        AuthorResponseDto responseDto = authorService.findById(authorId);
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 }

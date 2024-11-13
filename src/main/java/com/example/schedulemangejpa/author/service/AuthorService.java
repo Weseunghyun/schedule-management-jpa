@@ -1,9 +1,10 @@
 package com.example.schedulemangejpa.author.service;
 
-import com.example.schedulemangejpa.author.dto.SignUpRequestDto;
+import com.example.schedulemangejpa.author.dto.AuthorResponseDto;
 import com.example.schedulemangejpa.author.dto.SignUpResponseDto;
 import com.example.schedulemangejpa.author.entity.Author;
 import com.example.schedulemangejpa.author.repository.AuthorRepository;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,6 +27,17 @@ public class AuthorService {
             savedAuthor.getEmail(),
             savedAuthor.getCreatedAt(),
             savedAuthor.getModifiedAt()
+        );
+    }
+
+    public AuthorResponseDto findById(Long authorId) {
+        Author findAuthor = authorRepository.findByIdOrElseThrow(authorId);
+        return new AuthorResponseDto(
+            findAuthor.getId(),
+            findAuthor.getName(),
+            findAuthor.getEmail(),
+            findAuthor.getCreatedAt(),
+            findAuthor.getModifiedAt()
         );
     }
 }
