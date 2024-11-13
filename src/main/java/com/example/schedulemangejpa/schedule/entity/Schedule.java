@@ -21,8 +21,10 @@ public class Schedule extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Setter
     private String title;
 
+    @Setter
     private String content;
 
     //author 테이블과 다대일 관계를 갖도록 함. 연관관계 설정
