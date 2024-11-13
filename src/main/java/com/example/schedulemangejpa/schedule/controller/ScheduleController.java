@@ -36,11 +36,17 @@ public class ScheduleController {
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{authorId}")
-    public ResponseEntity<List<ScheduleReponseDto>> findByAuthorId(
-        @PathVariable Long authorId
-    ){
-        List<ScheduleReponseDto> reponseDtos = scheduleService.findByAuthorId(authorId);
+    @GetMapping
+    public ResponseEntity<List<ScheduleReponseDto>> findAllSchedules() {
+        List<ScheduleReponseDto> reponseDtos = scheduleService.findAllSchedules();
         return new ResponseEntity<>(reponseDtos, HttpStatus.OK);
+    }
+
+    @GetMapping("/{scheduleId}")
+    public ResponseEntity<ScheduleReponseDto> findByScheduleId(
+        @PathVariable Long scheduleId
+    ){
+        ScheduleReponseDto reponseDto = scheduleService.findByScheduleId(scheduleId);
+        return new ResponseEntity<>(reponseDto, HttpStatus.OK);
     }
 }

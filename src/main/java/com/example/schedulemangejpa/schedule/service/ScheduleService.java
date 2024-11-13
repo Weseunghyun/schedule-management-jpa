@@ -37,11 +37,17 @@ public class ScheduleService {
         );
     }
 
-    public List<ScheduleReponseDto> findByAuthorId(Long authorId) {
+    public List<ScheduleReponseDto> findAllSchedules() {
         return scheduleRepository
-            .findByAuthorId(authorId)
+            .findAll()
             .stream()
             .map(ScheduleReponseDto::toDto)
             .toList();
+    }
+
+    public ScheduleReponseDto findByScheduleId(Long scheduleId) {
+        Schedule findSchedule = scheduleRepository.findByIdOrElseThrow(scheduleId);
+
+        return ScheduleReponseDto.toDto(findSchedule);
     }
 }
