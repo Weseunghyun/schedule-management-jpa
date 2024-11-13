@@ -1,15 +1,13 @@
 package com.example.schedulemangejpa.schedule.repository;
 
 import com.example.schedulemangejpa.schedule.entity.Schedule;
-import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
 
-    List<Schedule> findByAuthorId(Long id);
-
+    // 스케줄 ID로 조회 후, 없으면 예외 발생시킨다 Not Found
     default Schedule findByIdOrElseThrow(long id) {
         return findById(id).
             orElseThrow(() ->

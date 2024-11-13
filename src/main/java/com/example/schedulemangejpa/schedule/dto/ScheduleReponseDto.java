@@ -24,6 +24,7 @@ public class ScheduleReponseDto {
         this.updatedAt = updatedAt;
     }
 
+    // 스케줄 엔티티를 DTO로 변환하는 정적 메서드
     public static ScheduleReponseDto toDto(Schedule schedule) {
         return new ScheduleReponseDto(
             schedule.getId(),

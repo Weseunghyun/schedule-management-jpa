@@ -17,10 +17,13 @@ public class AuthorService {
 
     private final AuthorRepository authorRepository;
 
+    // 회원가입을 처리하는 메서드
     public SignUpResponseDto signUp(String authorName, String authorEmail, String password) {
 
+        // 새로운 Author 객체를 생성하여 DB에 저장
         Author savedAuthor = authorRepository.save(new Author(authorName, authorEmail, password));
 
+        // 회원가입 성공 후 응답 DTO를 생성하여 반환
         return new SignUpResponseDto(
             savedAuthor.getId(),
             savedAuthor.getName(),
@@ -30,8 +33,11 @@ public class AuthorService {
         );
     }
 
+    // 작성자 ID로 작성자 정보를 조회하는 메서드
     public AuthorResponseDto findById(Long authorId) {
+        // 작성자 ID로 Author 객체를 조회, 존재하지 않으면 예외 발생
         Author findAuthor = authorRepository.findByIdOrElseThrow(authorId);
+        // 조회한 작성자 정보를 기반으로 응답 DTO 생성
         return new AuthorResponseDto(
             findAuthor.getId(),
             findAuthor.getName(),
@@ -41,6 +47,7 @@ public class AuthorService {
         );
     }
 
+    // 작성자 ID와 비밀번호로 작성자를 삭제하는 메서드
     public void deleteAuthor(Long authorId, String password) {
         Author findAuthor = authorRepository.findByIdOrElseThrow(authorId);
 

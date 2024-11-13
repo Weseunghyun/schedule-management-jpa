@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+// API 경로 설정: /api/authors로 모든 요청이 라우팅됨
 @RequestMapping("/api/authors")
 @RequiredArgsConstructor
 public class AuthorController {
@@ -30,6 +31,7 @@ public class AuthorController {
     public ResponseEntity<SignUpResponseDto> signUp(
         @RequestBody SignUpRequestDto requestDto
     ) {
+        // AuthorService의 signUp 메서드를 호출하여 회원가입을 처리하고, 응답 DTO를 생성
         SignUpResponseDto responseDto = authorService.signUp(
             requestDto.getAuthorName(),
             requestDto.getAuthorEmail(),

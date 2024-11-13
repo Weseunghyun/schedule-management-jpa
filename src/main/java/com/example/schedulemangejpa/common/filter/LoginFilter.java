@@ -14,7 +14,7 @@ import org.springframework.util.PatternMatchUtils;
 
 //로그인된 사용자만 특정 URL에 접근할 수 있도록 필터링하는 역할을 수행한다.
 //인증이 필요한 URL에 대한 요청이 들어올 때 세션에 authorId가 존재하는지 확인하고
-//존재하지 않는다면 예외를 발생시켜서 덥근을 차단한다.
+//존재하지 않는다면 예외를 발생시켜서 접근을 차단한다.
 @Slf4j
 public class LoginFilter implements Filter {
     // 인증을 하지 않아도될 URL Path 배열
