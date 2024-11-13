@@ -5,6 +5,7 @@ import com.example.schedulemangejpa.author.dto.DeleteAuthorRequestDto;
 import com.example.schedulemangejpa.author.dto.SignUpRequestDto;
 import com.example.schedulemangejpa.author.dto.SignUpResponseDto;
 import com.example.schedulemangejpa.author.service.AuthorService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,13 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/authors")
+@RequiredArgsConstructor
 public class AuthorController {
 
     private final AuthorService authorService;
-
-    public AuthorController(AuthorService authorService) {
-        this.authorService = authorService;
-    }
 
     //회원가입 진행 Post 메서드
     @PostMapping("/signup")

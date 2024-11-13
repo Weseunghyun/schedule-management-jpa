@@ -4,19 +4,16 @@ import com.example.schedulemangejpa.author.dto.AuthorResponseDto;
 import com.example.schedulemangejpa.author.dto.SignUpResponseDto;
 import com.example.schedulemangejpa.author.entity.Author;
 import com.example.schedulemangejpa.author.repository.AuthorRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
+@RequiredArgsConstructor
 public class AuthorService {
 
     private final AuthorRepository authorRepository;
-
-    public AuthorService(AuthorRepository authorRepository) {
-        this.authorRepository = authorRepository;
-    }
-
 
     public SignUpResponseDto signUp(String authorName, String authorEmail, String password) {
 

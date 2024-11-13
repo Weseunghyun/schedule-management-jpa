@@ -9,7 +9,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
 @Entity
 @Table(name = "schedule")
 public class Schedule extends BaseEntity {
@@ -23,6 +26,7 @@ public class Schedule extends BaseEntity {
     private String content;
 
     //author 테이블과 다대일 관계를 갖도록 함. 연관관계 설정
+    @Setter
     @ManyToOne
     @JoinColumn(name = "author_id")
     private Author author;
@@ -30,8 +34,9 @@ public class Schedule extends BaseEntity {
     public Schedule() {
     }
 
-    public Schedule(String title, String content, Author author) {
+    public Schedule(String title, String content) {
         this.title = title;
         this.content = content;
     }
+
 }
