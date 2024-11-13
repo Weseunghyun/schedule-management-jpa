@@ -3,8 +3,10 @@ package com.example.schedulemangejpa.schedule.service;
 import com.example.schedulemangejpa.author.entity.Author;
 import com.example.schedulemangejpa.author.repository.AuthorRepository;
 import com.example.schedulemangejpa.schedule.dto.CreateScheduleResponseDto;
+import com.example.schedulemangejpa.schedule.dto.ScheduleReponseDto;
 import com.example.schedulemangejpa.schedule.entity.Schedule;
 import com.example.schedulemangejpa.schedule.repository.ScheduleRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -33,5 +35,13 @@ public class ScheduleService {
             savedSchedule.getCreatedAt(),
             savedSchedule.getModifiedAt()
         );
+    }
+
+    public List<ScheduleReponseDto> findByAuthorId(Long authorId) {
+        return scheduleRepository
+            .findByAuthorId(authorId)
+            .stream()
+            .map(ScheduleReponseDto::toDto)
+            .toList();
     }
 }

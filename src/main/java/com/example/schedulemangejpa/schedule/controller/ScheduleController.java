@@ -2,10 +2,13 @@ package com.example.schedulemangejpa.schedule.controller;
 
 import com.example.schedulemangejpa.schedule.dto.CreateScheduleRequestDto;
 import com.example.schedulemangejpa.schedule.dto.CreateScheduleResponseDto;
+import com.example.schedulemangejpa.schedule.dto.ScheduleReponseDto;
 import com.example.schedulemangejpa.schedule.service.ScheduleService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,5 +34,13 @@ public class ScheduleController {
         );
 
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{authorId}")
+    public ResponseEntity<List<ScheduleReponseDto>> findByAuthorId(
+        @PathVariable Long authorId
+    ){
+        List<ScheduleReponseDto> reponseDtos = scheduleService.findByAuthorId(authorId);
+        return new ResponseEntity<>(reponseDtos, HttpStatus.OK);
     }
 }
