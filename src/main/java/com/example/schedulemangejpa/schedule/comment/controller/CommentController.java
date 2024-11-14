@@ -1,6 +1,5 @@
 package com.example.schedulemangejpa.schedule.comment.controller;
 
-import com.example.schedulemangejpa.schedule.comment.dto.CommentResponseDto;
 import com.example.schedulemangejpa.schedule.comment.dto.CreateCommentRequestDto;
 import com.example.schedulemangejpa.schedule.comment.dto.CreateCommentResponseDto;
 import com.example.schedulemangejpa.schedule.comment.dto.DeleteCommentRequestDto;

@@ -1,13 +1,14 @@
 package com.example.schedulemangejpa.schedule.comment.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 
 @Getter
 public class CreateCommentRequestDto {
 
-    @NotBlank(message = "scheduleId는 필수값 입니다.")
+    @NotNull
     private final Long scheduleId;
 
     @NotBlank(message = "댓글 내용은 필수값 입니다.")
