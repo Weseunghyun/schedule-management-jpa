@@ -95,7 +95,7 @@ public class ScheduleService {
         //가져온 인코딩된 비밀번호와 요청받은 평문 비밀번호를 matches 메서드로 비교
         if (passwordEncoder.matches(password, encodedPassword)) {
             return true;
-        }else {
+        } else {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "password not match!");
         }
     }

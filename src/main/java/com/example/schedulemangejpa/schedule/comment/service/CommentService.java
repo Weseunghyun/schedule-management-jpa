@@ -82,7 +82,7 @@ public class CommentService {
         Comment comment = commentRepository.findByIdOrElseThrow(commentId);
         String encodedPassword = comment.getAuthor().getPassword();
 
-        if (isValidatePassword(password,encodedPassword)) {
+        if (isValidatePassword(password, encodedPassword)) {
             commentRepository.delete(comment);
         }
     }
@@ -90,7 +90,7 @@ public class CommentService {
     private boolean isValidatePassword(String password, String encodedPassword) {
         if (passwordEncoder.matches(password, encodedPassword)) {
             return true;
-        }else {
+        } else {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "password not match!");
         }
     }

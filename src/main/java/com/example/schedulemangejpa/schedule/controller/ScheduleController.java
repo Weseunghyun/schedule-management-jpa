@@ -58,7 +58,7 @@ public class ScheduleController {
     @GetMapping("/{scheduleId}")
     public ResponseEntity<ScheduleReponseDto> findByScheduleId(
         @PathVariable Long scheduleId // 경로에서 스케줄 ID를 받아옴
-    ){
+    ) {
         ScheduleReponseDto reponseDto = scheduleService.findByScheduleId(scheduleId);
         return new ResponseEntity<>(reponseDto, HttpStatus.OK);
     }
@@ -67,8 +67,8 @@ public class ScheduleController {
     @PutMapping("/{scheduleId}")
     public ResponseEntity<ScheduleReponseDto> updateSchedule(
         @PathVariable Long scheduleId,
-        @RequestBody UpdateScheduleRequestDto requestDto // 요청 본문에서 제목, 내용, 비밀번호를 받아옴
-    ){
+        @Valid @RequestBody UpdateScheduleRequestDto requestDto // 요청 본문에서 제목, 내용, 비밀번호를 받아옴
+    ) {
         ScheduleReponseDto reponseDto = scheduleService.updateSchedule(scheduleId, requestDto);
         return new ResponseEntity<>(reponseDto, HttpStatus.OK);
     }
@@ -77,8 +77,8 @@ public class ScheduleController {
     @DeleteMapping("/{scheduleId}")
     public ResponseEntity<Void> deleteSchedule(
         @PathVariable Long scheduleId,
-        @RequestBody DeleteScheduleRequestDto requestDto // 요청 본문에서 비밀번호를 받아옴
-    ){
+        @Valid @RequestBody DeleteScheduleRequestDto requestDto // 요청 본문에서 비밀번호를 받아옴
+    ) {
         scheduleService.deleteSchedule(scheduleId, requestDto.getPassword());
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -87,7 +87,7 @@ public class ScheduleController {
     @GetMapping("/{scheduleId}/comments")
     public ResponseEntity<List<CommentResponseDto>> findAllCommentsByScheduleID(
         @PathVariable Long scheduleId
-    ){
+    ) {
         List<CommentResponseDto> responseDtoList = commentService.findAllComments(scheduleId);
 
         return new ResponseEntity<>(responseDtoList, HttpStatus.OK);

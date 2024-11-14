@@ -6,6 +6,7 @@ import lombok.Getter;
 
 @Getter
 public class DeleteCommentRequestDto {
+
     @NotBlank(message = "비밀번호는 필수값 입니다")
     private final String password;
 

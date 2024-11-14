@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
+
     List<Comment> findBySchedule(Schedule schedule);
 
     default Comment findByIdOrElseThrow(Long id) {

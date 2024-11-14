@@ -7,6 +7,7 @@ import com.example.schedulemangejpa.schedule.comment.dto.DeleteCommentRequestDto
 import com.example.schedulemangejpa.schedule.comment.dto.UpdateCommentRequestDto;
 import com.example.schedulemangejpa.schedule.comment.dto.UpdateCommentResponseDto;
 import com.example.schedulemangejpa.schedule.comment.service.CommentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class CommentController {
 
     @PostMapping
     public ResponseEntity<CreateCommentResponseDto> createComment(
-        @RequestBody CreateCommentRequestDto requestDto
+        @Valid @RequestBody CreateCommentRequestDto requestDto
     ) {
         CreateCommentResponseDto responseDto = commentService.createComment(
             requestDto.getScheduleId(),
@@ -40,7 +41,7 @@ public class CommentController {
     @PutMapping("/{commentId}")
     public ResponseEntity<UpdateCommentResponseDto> updateComment(
         @PathVariable Long commentId,
-        @RequestBody UpdateCommentRequestDto requestDto
+        @Valid @RequestBody UpdateCommentRequestDto requestDto
     ) {
         UpdateCommentResponseDto responseDto = commentService.updateComment(
             commentId,
@@ -54,8 +55,8 @@ public class CommentController {
     @DeleteMapping("/{commentId}")
     public ResponseEntity<Void> deleteComment(
         @PathVariable Long commentId,
-        @RequestBody DeleteCommentRequestDto requestDto
-    ){
+        @Valid @RequestBody DeleteCommentRequestDto requestDto
+    ) {
         commentService.deleteComment(commentId, requestDto.getPassword());
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -8,7 +8,7 @@ import lombok.Getter;
 public class UpdateScheduleRequestDto {
 
     @NotBlank(message = "제목은 필수값 입니다.")
-    @Size(min=3, max=20, message = "제목은 3자 이상 20자 이내여야 합니다.")
+    @Size(min = 3, max = 20, message = "제목은 3자 이상 20자 이내여야 합니다.")
     private final String title;
 
     @NotBlank(message = "본문 내용은 필수값 입니다.")

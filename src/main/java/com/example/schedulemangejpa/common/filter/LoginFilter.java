@@ -17,8 +17,10 @@ import org.springframework.util.PatternMatchUtils;
 //존재하지 않는다면 예외를 발생시켜서 접근을 차단한다.
 @Slf4j
 public class LoginFilter implements Filter {
+
     // 인증을 하지 않아도될 URL Path 배열
-    private static final String[] WHITE_LIST = {"/", "/api/authors/signup", "/api/authors/login", "/api/authors/logout"};
+    private static final String[] WHITE_LIST = {"/", "/api/authors/signup", "/api/authors/login",
+        "/api/authors/logout"};
 
     @Override
     public void doFilter(

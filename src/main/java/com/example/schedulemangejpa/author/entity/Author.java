@@ -27,7 +27,8 @@ public class Author extends BaseEntity {
     @Column(nullable = false)
     private String password;
 
-    public Author() {}
+    public Author() {
+    }
 
     public Author(String name, String email, String password) {
         this.name = name;

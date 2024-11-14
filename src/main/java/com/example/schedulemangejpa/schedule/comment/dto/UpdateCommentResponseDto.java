@@ -5,6 +5,7 @@ import lombok.Getter;
 
 @Getter
 public class UpdateCommentResponseDto {
+
     private final Long commentId;
     private final Long scheduleId;
     private final Long authorId;

@@ -13,7 +13,7 @@ public class CreateScheduleResponseDto {
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;
 
-    public CreateScheduleResponseDto(Long id,  Long authorId, String title, String content,
+    public CreateScheduleResponseDto(Long id, Long authorId, String title, String content,
         LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.authorId = authorId;
