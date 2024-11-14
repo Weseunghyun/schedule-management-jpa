@@ -1,5 +1,7 @@
 package com.example.schedulemangejpa.schedule.controller;
 
+import com.example.schedulemangejpa.schedule.comment.dto.CommentResponseDto;
+import com.example.schedulemangejpa.schedule.comment.service.CommentService;
 import com.example.schedulemangejpa.schedule.dto.CreateScheduleRequestDto;
 import com.example.schedulemangejpa.schedule.dto.CreateScheduleResponseDto;
 import com.example.schedulemangejpa.schedule.dto.DeleteScheduleRequestDto;
@@ -27,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ScheduleController {
 
     private final ScheduleService scheduleService;
+    private final CommentService commentService;
 
     // 스케줄 생성 API, 작성자 ID와 요청 본문을 받아 새로운 스케줄 생성
     @PostMapping("/{authorId}")
@@ -78,5 +81,15 @@ public class ScheduleController {
     ){
         scheduleService.deleteSchedule(scheduleId, requestDto.getPassword());
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    //특정 게시글에 달린 댓글들을 조회
+    @GetMapping("/{scheduleId}/comments")
+    public ResponseEntity<List<CommentResponseDto>> findAllCommentsByScheduleID(
+        @PathVariable Long scheduleId
+    ){
+        List<CommentResponseDto> responseDtoList = commentService.findAllComments(scheduleId);
+
+        return new ResponseEntity<>(responseDtoList, HttpStatus.OK);
     }
 }
