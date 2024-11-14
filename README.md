@@ -140,7 +140,7 @@
 - **요청**
   - **Headers**:
     - `Content-Type: application/json`
-  - **Path Variable**: `id` - 삭제할 일정의 고유 ID
+  - **Path Variable**: `id` - 삭제할 작성자의 고유 ID
   - 예시
 
   ```
@@ -149,7 +149,7 @@
             
    | # | 이름 | 타입 | 설명 | Nullable |
    | --- | --- | --- | --- | --- |
-   | 1 | id  | Long  | 일정 고유 식별자 | X |
+   | 1 | id  | Long  | 작성자 고유 식별자 | X |
    - Body:
             
    ```json
