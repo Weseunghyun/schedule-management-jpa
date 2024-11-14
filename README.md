@@ -511,8 +511,6 @@
 
 </details>
 
-</details>
-
 ---
 
 ### 6. 일정 페이지네이션 (POST /api/schedules)
@@ -578,6 +576,8 @@
         ```
         
     
+
+</details>
 
 </details>
 
