@@ -112,12 +112,12 @@
    ```
                
    | # | 이름 | 타입 | 설명 | Nullable |
-               | --- | --- | --- | --- | --- |
-               | 1 | id | Long | 일정 고유 식별자 | X |
-               | 2 | authorName | String | 작성자명 | X |
-               | 3 | authorEmail | String | 작성자 이메일 | X |
-               | 4 | createdAt | String | 최초 작성 일시 | X |
-               | 5 | updatedAt | String | 수정 일시 | X |
+   | --- | --- | --- | --- | --- |
+   | 1 | id | Long | 일정 고유 식별자 | X |
+   | 2 | authorName | String | 작성자명 | X |
+   | 3 | authorEmail | String | 작성자 이메일 | X |
+   | 4 | createdAt | String | 최초 작성 일시 | X |
+   | 5 | updatedAt | String | 수정 일시 | X |
        
 - 발생할 수 있는 에러
     1. 존재하지 않는 작성자 id를 요청했을 때 404 NOT FOUND 에러       
@@ -142,8 +142,8 @@
    ```
             
    | # | 이름 | 타입 | 설명 | Nullable |
-            | --- | --- | --- | --- | --- |
-            | 1 | id  | Long  | 일정 고유 식별자 | X |
+   | --- | --- | --- | --- | --- |
+   | 1 | id  | Long  | 일정 고유 식별자 | X |
    - Body:
             
    ```json
@@ -153,8 +153,8 @@
    ```
             
    | # | 이름 | 타입 | 설명 | Nullabel |
-            | --- | --- | --- | --- | --- |
-            | 1 | password | String | 작성자 패스워드 | X |
+   | --- | --- | --- | --- | --- |
+   | 1 | password | String | 작성자 패스워드 | X |
 
    - **응답**
      - **Status Code**: 200 OK
@@ -196,9 +196,9 @@
       ```
             
       | # | 이름 | 타입 | 설명 | Nullable |
-              | --- | --- | --- | --- | --- |
-              | 1 | authorEmail | String | 작성자 이메일 | X |
-              | 2 | password | String | 작성자 패스워드 | X |
+      | --- | --- | --- | --- | --- |
+      | 1 | authorEmail | String | 작성자 이메일 | X |
+      | 2 | password | String | 작성자 패스워드 | X |
 - **응답**
   - **Status Code**: 200 OK
   - **Body**: 없음
@@ -267,10 +267,10 @@
      ```                  
                 
      | # | 이름 | 타입 | 설명 | Nullable |
-                        | --- | --- | --- | --- | --- |
-                        | 1 | authorId | Long | 작성자 Id | x |
-                        | 2 | title | String | 할 일 제목 | x |
-                        | 3 | content | String | 할 일 내용 | x |
+     | --- | --- | --- | --- | --- |
+     | 1 | authorId | Long | 작성자 Id | x |
+     | 2 | title | String | 할 일 제목 | x |
+     | 3 | content | String | 할 일 내용 | x |
 
 - **응답 Response**
    - **Status Code**: 201 Created
@@ -350,7 +350,7 @@
        ```
 
      | # | 이름 | 타입 | 설명 | Nullable |
-             | --- | --- | --- | --- | --- |
+     | --- | --- | --- | --- | --- |
      | 1 | id | Long | 일정 고유 식별자 | X |
      | 2 | authorId | String | 작성자 고유 식별자 | X |
      | 3 | title | String | 할 일 제목 | X |
@@ -393,7 +393,7 @@
        ```
 
      | # | 이름 | 타입 | 설명 | Nullable |
-             | --- | --- | --- | --- | --- |
+     | --- | --- | --- | --- | --- |
      | 1 | id | Long | 일정 고유 식별자 | X |
      | 2 | authorId | Long | 작성자 고유 식별자 | X |
      | 3 | title | String | 할 일 제목 | X |
@@ -474,7 +474,7 @@
    - **Path Variable**: `schedulesId`- 삭제할 일정의 고유 ID
 
   | # | 이름 | 타입 | 설명 | Nullable |
-      | --- | --- | --- | --- | --- |
+  | --- | --- | --- | --- | --- |
   | 1 | id  | Long  | 일정 고유 식별자 | X |
    - 예시
 
@@ -491,7 +491,7 @@
     ```
 
   | # | 이름 | 타입 | 설명 | Nullabel |
-      | --- | --- | --- | --- | --- |
+  | --- | --- | --- | --- | --- |
   | 1 | password | String | 작성자 패스워드 | X |
 - **응답**
    - **Status Code**: 200 OK
@@ -536,7 +536,7 @@
     ```
 
   | # | 이름 | 타입 | 설명 | Nullabel |
-      | --- | --- | --- | --- | --- |
+  | --- | --- | --- | --- | --- |
   | 1 | scheduleId | Long | 댓글을 작성할게시글 ID | X |
   | 2 | authorId | Long | 댓글을 다는 작성자의 ID | X |
   | 3 | content | String | 댓글 내용 | X |
@@ -563,7 +563,7 @@
     ```
 
   | # | 이름 | 타입 | 설명              | Nullabel |
-      | --- | --- | --- |-----------------| --- |
+  | --- | --- | --- |-----------------| --- |
   | 1 | commentId | Long | 댓글 고유 식별자       | X |
   | 2 | scheduleId | Long | 댓글을 작성할 게시글 ID  | X |
   | 3 | authorId | Long | 댓글을 작성하는 작성자 ID | X |
@@ -617,7 +617,7 @@
     ```
 
   | # | 이름 | 타입 | 설명 | Nullabel |
-      | --- | --- | --- | --- | --- |
+  | --- | --- | --- | --- | --- |
   | 1 | commentId | Long | 댓글 고유 식별자 | X |
   | 2 | scheduleId | Long | 댓글을 작성할게시글 ID | X |
   | 3 | authorId | Long | 댓글을 작성하는 작성자 ID | X |
