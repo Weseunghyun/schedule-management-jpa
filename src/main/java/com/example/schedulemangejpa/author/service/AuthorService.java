@@ -87,7 +87,7 @@ public class AuthorService {
     }
 
     public void logout(HttpServletRequest request) {
-        //현재 세션을 가져온다. false 이므로 새로운 세션을 생성하지 않고 null을 반환한다.
+        //현재 세션을 가져온다. false 이므로 세션이 없어도 새로운 세션을 생성하지 않고 null을 반환한다.
         HttpSession session = request.getSession(false);
 
         //세션이 존재하면다면 invalidate로 세션을 무효화하여 서버측의 로그인 정보를 삭제한다.
