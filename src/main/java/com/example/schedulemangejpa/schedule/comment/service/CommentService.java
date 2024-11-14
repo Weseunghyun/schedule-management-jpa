@@ -26,23 +26,23 @@ public class CommentService {
     private final AuthorRepository authorRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public CreateCommentResponseDto createComment(Long scheduleId, String content) {
+    public CreateCommentResponseDto createComment(Long scheduleId, Long authorId, String content) {
         Schedule schedule = scheduleRepository.findByIdOrElseThrow(scheduleId);
-        Author author = authorRepository.findByIdOrElseThrow(schedule.getAuthor().getId());
+        Author author = authorRepository.findByIdOrElseThrow(authorId);
 
         Comment comment = new Comment(content);
         comment.setSchedule(schedule);
         comment.setAuthor(author);
 
-        commentRepository.save(comment);
+        Comment savedComment = commentRepository.save(comment);
 
         return new CreateCommentResponseDto(
-            comment.getId(),
-            comment.getSchedule().getId(),
-            comment.getAuthor().getId(),
-            comment.getContent(),
-            comment.getCreatedAt(),
-            comment.getModifiedAt()
+            savedComment.getId(),
+            savedComment.getSchedule().getId(),
+            savedComment.getAuthor().getId(),
+            savedComment.getContent(),
+            savedComment.getCreatedAt(),
+            savedComment.getModifiedAt()
         );
     }
 

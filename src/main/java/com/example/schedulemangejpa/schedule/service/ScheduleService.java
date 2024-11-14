@@ -4,12 +4,18 @@ import com.example.schedulemangejpa.author.entity.Author;
 import com.example.schedulemangejpa.author.repository.AuthorRepository;
 import com.example.schedulemangejpa.common.config.PasswordEncoder;
 import com.example.schedulemangejpa.schedule.dto.CreateScheduleResponseDto;
+import com.example.schedulemangejpa.schedule.dto.SchedulePageResponseDto;
 import com.example.schedulemangejpa.schedule.dto.ScheduleReponseDto;
+import com.example.schedulemangejpa.schedule.dto.ScheduleWithCommentCountDto;
 import com.example.schedulemangejpa.schedule.dto.UpdateScheduleRequestDto;
 import com.example.schedulemangejpa.schedule.entity.Schedule;
 import com.example.schedulemangejpa.schedule.repository.ScheduleRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -98,5 +104,30 @@ public class ScheduleService {
         } else {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "password not match!");
         }
+    }
+
+    // 일정 목록 및 페이지네이션 정보 조회 메서드
+    public SchedulePageResponseDto getSchedules(int page, int size) {
+        // Pageable 객체 생성 (수정일 기준 내림차순 정렬)
+        Pageable pageable = PageRequest.of(page, size, Sort.by("modifiedAt").descending());
+
+        // Repository에서 페이징된 일정 목록 조회 (댓글 수 포함)
+        Page<ScheduleWithCommentCountDto> schedules = scheduleRepository.findAllWithCommentCount(pageable);
+
+        // Page 객체에서 필요한 페이지네이션 정보 추출하여 PageInfo 생성
+        SchedulePageResponseDto.PageInfo pageInfo = new SchedulePageResponseDto.PageInfo(
+            schedules.getNumber() + 1, // 사용자가 보는 페이지는 1부터 시작
+            schedules.getSize(),
+            (int) schedules.getTotalElements(),
+            schedules.getTotalPages()
+        );
+
+        // ScheduleWithCommentCountDto 목록과 PageInfo를 SchedulePageResponseDto로 반환
+        SchedulePageResponseDto response = new SchedulePageResponseDto(
+            schedules.getContent(), // 조회한 일정 데이터 리스트
+            pageInfo  // 페이지 정보 객체
+        );
+
+        return response;
     }
 }

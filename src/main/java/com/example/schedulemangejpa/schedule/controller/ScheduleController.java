@@ -5,12 +5,21 @@ import com.example.schedulemangejpa.schedule.comment.service.CommentService;
 import com.example.schedulemangejpa.schedule.dto.CreateScheduleRequestDto;
 import com.example.schedulemangejpa.schedule.dto.CreateScheduleResponseDto;
 import com.example.schedulemangejpa.schedule.dto.DeleteScheduleRequestDto;
+import com.example.schedulemangejpa.schedule.dto.SchedulePageResponseDto;
+import com.example.schedulemangejpa.schedule.dto.SchedulePageResponseDto.PageInfo;
 import com.example.schedulemangejpa.schedule.dto.ScheduleReponseDto;
+import com.example.schedulemangejpa.schedule.dto.ScheduleWithCommentCountDto;
 import com.example.schedulemangejpa.schedule.dto.UpdateScheduleRequestDto;
+import com.example.schedulemangejpa.schedule.entity.Schedule;
 import com.example.schedulemangejpa.schedule.service.ScheduleService;
 import jakarta.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,6 +29,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -91,5 +101,20 @@ public class ScheduleController {
         List<CommentResponseDto> responseDtoList = commentService.findAllComments(scheduleId);
 
         return new ResponseEntity<>(responseDtoList, HttpStatus.OK);
+    }
+
+    //게시글 페이지네이션
+    @GetMapping("/paginated")
+    public ResponseEntity<SchedulePageResponseDto> getSchedules(
+        // 페이지 번호 (기본값: 1). 클라이언트에서 제공하지 않으면 1 페이지로 설정
+        @RequestParam(defaultValue = "1") int page,
+        // 페이지 크기 (기본값: 10). 한 페이지에 보여줄 항목 수를 설정
+        @RequestParam(defaultValue = "10") int size
+    ) {
+        // 서비스 계층 메서드 호출하여 일정 목록 및 페이지 정보 조회
+        // 요청 시 페이지 번호는 1부터 시작하는 반면, Pageable은 0부터 시작하므로 -1 처리
+        SchedulePageResponseDto pageResponseDto = scheduleService.getSchedules(page - 1, size);
+
+        return new ResponseEntity<>(pageResponseDto, HttpStatus.OK);
     }
 }

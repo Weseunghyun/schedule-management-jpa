@@ -31,6 +31,7 @@ public class CommentController {
     ) {
         CreateCommentResponseDto responseDto = commentService.createComment(
             requestDto.getScheduleId(),
+            requestDto.getAuthorId(),
             requestDto.getContent()
         );
 
