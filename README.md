@@ -41,10 +41,10 @@
      ```
                 
      | # | 이름 | 타입 | 설명 | Nullable |
-              | --- | --- | --- | --- | --- |
-              | 1 | authorName | String | 작성자명 | X |
-              | 2 | authorEmail | String | 작성자 이메일 | X |
-              | 3 | password | String | 작성자 비밀번호 | X |
+     | --- | --------- | ------- | -------- | ------- |
+     | 1 | authorName | String | 작성자명 | X |
+     | 2 | authorEmail | String | 작성자 이메일 | X |
+     | 3 | password | String | 작성자 비밀번호 | X |
 
   - 예시
                 
