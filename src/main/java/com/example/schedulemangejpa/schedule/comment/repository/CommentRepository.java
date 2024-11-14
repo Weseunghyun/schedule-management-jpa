@@ -9,8 +9,10 @@ import org.springframework.web.server.ResponseStatusException;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
+    // 특정 스케줄에 속한 댓글 리스트 조회 메서드
     List<Comment> findBySchedule(Schedule schedule);
 
+    // 주어진 ID로 댓글 조회, 없을 경우 예외 발생
     default Comment findByIdOrElseThrow(Long id) {
         return findById(id).orElseThrow(() ->
             new ResponseStatusException(
