@@ -515,6 +515,72 @@
 
 ---
 
+### 6. 일정 페이지네이션 (POST /api/schedules)
+
+<details>
+<summary>상세 내용 펼치기</summary>
+
+- **요청**
+    - **Parameters**:
+        - page (optional): 페이지 수 (기본값 1)
+        - size (optional): 페이지 크기 (기본값 10)
+    - **정렬**: `updatedDate` 기준 내림차순
+    - url 예시
+    
+    ```
+    http://localhost:8080/api/schedules/paginated
+    http://localhost:8080/api/schedules/paginated?page=2
+    http://localhost:8080/api/schedules/paginated?page=1&size=5
+    ```
+    
+- **응답**
+    - **Status Code**: 200 OK
+    - **Body**:
+        
+        ```json
+        {
+            "schedules": [
+                {
+                    "id": 3,
+                    "title": "청소하기",
+                    "content": "청소기 돌리기",
+                    "authorName": "두번째",
+                    "commentCount": 0,
+                    "createdAt": "2024-11-15T07:07:59.186326",
+                    "updatedAt": "2024-11-15T07:07:59.186326"
+                },
+                {
+                    "id": 2,
+                    "title": "밥먹기",
+                    "content": "오므라이스 해먹기",
+                    "authorName": "처음",
+                    "commentCount": 3,
+                    "createdAt": "2024-11-15T07:07:30.209301",
+                    "updatedAt": "2024-11-15T07:07:30.209301"
+                },
+                {
+                    "id": 1,
+                    "title": "할일 test",
+                    "content": "할일 test",
+                    "authorName": "처음",
+                    "commentCount": 1,
+                    "createdAt": "2024-11-15T07:07:15.483327",
+                    "updatedAt": "2024-11-15T07:07:15.483327"
+                }
+            ],
+            "pageInfo": {
+                "page": 1,
+                "size": 10,
+                "totalElements": 3,
+                "totalPages": 1
+            }
+        }
+        ```
+        
+    
+
+</details>
+
 <br>
 
 
