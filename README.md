@@ -67,12 +67,12 @@
       ```
                 
   | # | 이름 | 타입 | 설명 | Nullable |
-                | --- | --- | --- | --- | --- |
-                | 1 | id | Long | 작성자 고유 식별자 | X |
-                | 2 | name | String | 작성자명 | X |
-                | 3 | email | String | 작성자 이메일 | X |
-                | 4 | createdAt | String | 작성자 최초 등록 일시 | X |
-                | 5 | modifiedAt | String | 수정 일시 | X |
+  | --- | --- | --- | --- | --- |
+  | 1 | id | Long | 작성자 고유 식별자 | X |
+  | 2 | name | String | 작성자명 | X |
+  | 3 | email | String | 작성자 이메일 | X |
+  | 4 | createdAt | String | 작성자 최초 등록 일시 | X |
+  | 5 | modifiedAt | String | 수정 일시 | X |
         
 - 발생할 수 있는 예외 
        
