@@ -2,22 +2,28 @@ package com.example.schedulemangejpa.schedule.comment.service;
 
 import com.example.schedulemangejpa.author.entity.Author;
 import com.example.schedulemangejpa.author.repository.AuthorRepository;
+import com.example.schedulemangejpa.common.config.PasswordEncoder;
 import com.example.schedulemangejpa.schedule.comment.dto.CommentResponseDto;
 import com.example.schedulemangejpa.schedule.comment.dto.CreateCommentResponseDto;
+import com.example.schedulemangejpa.schedule.comment.dto.UpdateCommentResponseDto;
 import com.example.schedulemangejpa.schedule.comment.entity.Comment;
 import com.example.schedulemangejpa.schedule.comment.repository.CommentRepository;
 import com.example.schedulemangejpa.schedule.entity.Schedule;
 import com.example.schedulemangejpa.schedule.repository.ScheduleRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
 public class CommentService {
+
     private final CommentRepository commentRepository;
     private final ScheduleRepository scheduleRepository;
     private final AuthorRepository authorRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public CreateCommentResponseDto createComment(Long scheduleId, String content) {
         Schedule schedule = scheduleRepository.findByIdOrElseThrow(scheduleId);
@@ -47,5 +53,29 @@ public class CommentService {
         return commentList.stream()
             .map(CommentResponseDto::toDto)
             .toList();
+    }
+
+    public UpdateCommentResponseDto updateComment(Long commentId, String content, String password) {
+        Comment comment = commentRepository.findByIdOrElseThrow(commentId);
+        Author author = comment.getAuthor();
+
+        String encodedPassword = author.getPassword();
+
+        if (passwordEncoder.matches(password, encodedPassword)) {
+            comment.setContent(content);
+        } else {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "password not match!");
+        }
+
+        Comment updateComment = commentRepository.save(comment);
+
+        return new UpdateCommentResponseDto(
+            updateComment.getId(),
+            updateComment.getSchedule().getId(),
+            updateComment.getAuthor().getId(),
+            updateComment.getContent(),
+            updateComment.getCreatedAt(),
+            updateComment.getModifiedAt()
+        );
     }
 }
