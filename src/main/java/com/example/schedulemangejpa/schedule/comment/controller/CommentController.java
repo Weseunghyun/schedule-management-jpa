@@ -3,12 +3,14 @@ package com.example.schedulemangejpa.schedule.comment.controller;
 import com.example.schedulemangejpa.schedule.comment.dto.CommentResponseDto;
 import com.example.schedulemangejpa.schedule.comment.dto.CreateCommentRequestDto;
 import com.example.schedulemangejpa.schedule.comment.dto.CreateCommentResponseDto;
+import com.example.schedulemangejpa.schedule.comment.dto.DeleteCommentRequestDto;
 import com.example.schedulemangejpa.schedule.comment.dto.UpdateCommentRequestDto;
 import com.example.schedulemangejpa.schedule.comment.dto.UpdateCommentResponseDto;
 import com.example.schedulemangejpa.schedule.comment.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -47,5 +49,14 @@ public class CommentController {
         );
 
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{commentId}")
+    public ResponseEntity<Void> deleteComment(
+        @PathVariable Long commentId,
+        @RequestBody DeleteCommentRequestDto requestDto
+    ){
+        commentService.deleteComment(commentId, requestDto.getPassword());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -10,6 +10,7 @@ import com.example.schedulemangejpa.schedule.comment.entity.Comment;
 import com.example.schedulemangejpa.schedule.comment.repository.CommentRepository;
 import com.example.schedulemangejpa.schedule.entity.Schedule;
 import com.example.schedulemangejpa.schedule.repository.ScheduleRepository;
+import jakarta.validation.constraints.NotBlank;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -57,11 +58,9 @@ public class CommentService {
 
     public UpdateCommentResponseDto updateComment(Long commentId, String content, String password) {
         Comment comment = commentRepository.findByIdOrElseThrow(commentId);
-        Author author = comment.getAuthor();
+        String encodedPassword = comment.getAuthor().getPassword();
 
-        String encodedPassword = author.getPassword();
-
-        if (passwordEncoder.matches(password, encodedPassword)) {
+        if (isValidatePassword(password, encodedPassword)) {
             comment.setContent(content);
         } else {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "password not match!");
@@ -77,5 +76,22 @@ public class CommentService {
             updateComment.getCreatedAt(),
             updateComment.getModifiedAt()
         );
+    }
+
+    public void deleteComment(Long commentId, String password) {
+        Comment comment = commentRepository.findByIdOrElseThrow(commentId);
+        String encodedPassword = comment.getAuthor().getPassword();
+
+        if (isValidatePassword(password,encodedPassword)) {
+            commentRepository.delete(comment);
+        }
+    }
+
+    private boolean isValidatePassword(String password, String encodedPassword) {
+        if (passwordEncoder.matches(password, encodedPassword)) {
+            return true;
+        }else {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "password not match!");
+        }
     }
 }
